@@ -1,14 +1,3 @@
-apiVersion: ceph.rook.io/v1
-kind: CephBlockPool
-metadata:
-  name: homelabpool
-  namespace: rook-ceph # namespace:cluster
-spec:
-  failureDomain: host
-  replicated:
-    size: 2
-    requireSafeReplicaSize: false
----
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
