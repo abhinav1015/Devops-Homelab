@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gitlab-ingress
+  namespace: gitlab
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: gitlab.abhinavm.local  # Change this if you have a real domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gitlab-svc
+                port:
+                  number: 443
+  tls:
+    - hosts: 
+        - gitlab.abhinavm.local
+      secretName: gitlab-tls-secret

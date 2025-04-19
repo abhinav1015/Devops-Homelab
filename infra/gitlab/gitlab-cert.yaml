@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: gitlab-tls
+  namespace: gitlab #NS where the gitlab is installed
+spec:
+  commonName: gitlab.abhinavm.local  # Your GitLab domain or subdomain
+  secretName: gitlab-tls-secret  # The secret where the certificate will be stored. will be automatically created by cert-manager.
+  issuerRef:
+    name: selfsigned-issuer  # The issuer for signing the certificate
+    kind: ClusterIssuer
+  dnsNames:
+    - gitlab.abhinavm.local
