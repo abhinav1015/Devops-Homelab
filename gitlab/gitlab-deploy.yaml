@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab
+  labels:
+    app: gitlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitlab
+  template:
+    metadata:
+      labels:
+        app: gitlab
+    spec:
+      containers:
+        - name: gitlab
+          image: gitlab/gitlab-ce:latest
+          env:
+            - name: GITLAB_OMNIBUS_CONFIG
+              value: |
+                external_url 'https://gitlab.abhinavm.local'
+                letsencrypt['enable'] = false
+                gitlab_kas['enable'] = true
+                gitlab_rails['gitlab_kas_enabled'] = true
+                gitlab_rails['gitlab_kas_external_url'] = 'wss://gitlab.abhinavm.local/-/kubernetes-agent/'
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+            - containerPort: 22
+          volumeMounts:
+            - name: gitlab-storage
+              mountPath: /var/opt/gitlab  # GitLab data, config, and logs all stored here
+            - name: gitlab-cert
+              mountPath: /etc/gitlab/ssl
+              readOnly: true
+      volumes:
+        - name: gitlab-storage
+          persistentVolumeClaim:
+            claimName: gitlab-pvc  # PVC for all GitLab storage
+        - name: gitlab-cert
+          secret:
+            secretName: gitlab-container-cert
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab-svc
+spec:
+  selector:
+    app: gitlab
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+    - name: https
+      port: 443
+      targetPort: 443
+    - name: ssh
+      port: 22
+      targetPort: 22
+  type: ClusterIP  # Exposing the service using NodePort
