@@ -19,6 +19,4 @@ metadata:
     controller.cert-manager.io/fao: "true"
   name: gitlab-tls-secret
   namespace: gitlab
-  resourceVersion: "33916"
-  uid: 7cf8ea60-8853-42bf-bf7f-a69238601400
 type: kubernetes.io/tls

@@ -1,21 +1,26 @@
-# argo-apps/gitlab.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: gitlab
   namespace: argocd
 spec:
-  project: default
+  destination:
+    namespace: gitlab
+    server: https://kubernetes.default.svc
   source:
+    path: infra/gitlab
     repoURL: https://github.com/abhinav1015/Devops-Homelab
     targetRevision: main
-    path: infra/gitlab
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: gitlab
+  project: default
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+      createNamespace: true
+  ignoreDifferences:
+    - group: ''
+      kind: Secret
+      name: gitlab-tls-secret
+      namespace: gitlab
+      jsonPointers:
+        - /data
