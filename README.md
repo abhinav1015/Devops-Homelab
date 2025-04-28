@@ -14,6 +14,14 @@ This project follows a modular approach to organize configurations into differen
 
 Infrastructure (infra/):
 Contains all the configuration files required to set up infrastructure components like GitLab, Cert-Manager, Ceph, etc.
+| Image/Logo | Infrastructure Name | Description |
+|:----------:|:--------------------:|:-----------|
+| <img src="https://docs.rke2.io/img/logo-horizontal-rke2.svg" width="100"/> | **RKE2** | Rancher's next-generation Kubernetes distribution, fully compliant and secured out-of-the-box. |
+| <img src="http://argo-cd.readthedocs.io/en/stable/assets/logo.png" width="100"/> | **ArgoCD** | A declarative GitOps continuous delivery tool for Kubernetes. |
+| <img src="https://rook.io/images/rook-logo.svg" width="100"/> | **Rook & Ceph** | Rook is a storage orchestrator for Kubernetes; it uses Ceph to provide highly available, distributed storage. |
+| <img src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png" width="100"/> | **GitLab** | A complete DevOps platform, providing Git repository management, CI/CD pipelines, and more. |
+| <img src="https://cdn.prod.website-files.com/64196dbe03e13c204de1b1c8/66e3f89f9261694c9915b3cc_64773cb107fa08930fe8d468_76-image1.png" width="100"/> | **MetalLB** | A load-balancer implementation for bare metal Kubernetes clusters. |
+| <img src="https://raw.githubusercontent.com/cert-manager/cert-manager/master/logo/logo-small.png" width="100"/> | **cert-manager** | Automates the management and issuance of TLS certificates in Kubernetes clusters. |
 
 # Deployment Flow
 GitOps with ArgoCD:
